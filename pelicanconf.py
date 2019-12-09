@@ -5,6 +5,9 @@ from __future__ import unicode_literals
 AUTHOR = 'Brooks Kindle'
 SITENAME = 'test'
 SITEURL = ''
+PLUGIN_PATHS = ["plugins"]
+PLUGINS = ["remark"]
+THEME_TEMPLATES_OVERRIDES = ["plugins/remark/templates"]
 
 PATH = 'content'
 
