@@ -24,6 +24,9 @@ class RemarkReader(MarkdownReader):
             delimeter = "\n\n"
             content = md_content[md_content.find(delimeter) + len(delimeter):]
 
+        # content = "![]({static}/images/git-status.png)"
+        # content = "<a src='{static}/images/git-status.png'></a>"
+        # content = '<textarea id="source">![]({static}/images/git-status.png)</textarea>'
         return content, metadata
 
 
