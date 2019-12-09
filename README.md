@@ -12,7 +12,7 @@ Using `pelican==4.2.0`
 1. Browse to http://localhost:8000/remark-test.html and view page source from
    your browser
 1. Observe that the `{static}/images/git-status.png` line was not converted
-   properly, was is the case in http://localhost:8000/markdown-test.html
+   properly, as is the case with http://localhost:8000/markdown-test.html
 
 ## Explanation
 There are two articles in this project, `hello.md` and `hello.remark`.
