@@ -1,9 +1,48 @@
 import os
+import re
 
 from markdown import Markdown
 from pelican import signals
 from pelican.readers import MarkdownReader
 from pelican.utils import pelican_open
+from pelican.contents import Content
+
+INTRASITE_LINK_REGEX = '[{|](?P<what>.*?)[|}]' # TODO: fetch from Content
+
+def my_regex_matcher(self):
+    """
+    Match internal pelican links found in markdown content
+
+    Markdown links are of the form:
+        [text](link)
+        ![](image.png)
+        ![alt text](image.png)
+    """
+    regex = (
+        r"(?P<markup>"
+        r"!?"
+        r"\[.*?\]"  # Markdown links start with brackets, Eg: [], [link name]
+        r")"  # End markup group
+
+        r"(?P<quote>"
+        r"\("  # Open parenthesis
+        r")"  # End group quote
+
+
+        # TODO: quote needs to be open close paren ( ), but it can't match both
+
+        # r"\[.*?\]"  # Markdown links start with brackets, Eg: [], [link name]
+        # r"\("  # Open parenthesis
+        + "(?P<path>{0}".format(INTRASITE_LINK_REGEX)  # {...} or |...| to denote an internal link
+        + r"(?P<value>.*?))"  # Then the link path, relative to the site
+        r"\)"  # Finally, close the parenthesis
+
+        r".*"  # Capture everything else, we just don't care
+    )
+    print(regex)
+    return re.compile(regex, re.X)
+
+Content._get_intrasite_link_regex = my_regex_matcher
 
 
 class RemarkReader(MarkdownReader):
